@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
-
+{% load humanize %}
+  
 {% block title %}
   {{ board.name }} - {{ block.super }}
 {% endblock %}
@@ -24,13 +25,13 @@
       </tr>
     </thead>
     <tbody>
-    {% for topic in board.topics.all %}
+    {% for topic in topics %}
   <tr>
     <td><a href="{% url 'topic_posts' board.pk topic.pk %}">{{ topic.subject }}</a></td>
     <td>{{ topic.starter.username }}</td>
     <td>{{ topic.replies }}</td>
     <td>{{ topic.views }}</td>
-    <td>{{ topic.last_updated }}</td>
+  <td>{{ topic.last_updated|naturaltime }}</td>
   </tr>
       {% empty %}
         <tr>
@@ -39,4 +40,7 @@
       {% endfor %}
     </tbody>
   </table>
+
+{% include 'includes/pagination.html' %}
+
 {% endblock %}

@@ -1,8 +1,7 @@
 from django.urls import reverse, resolve
 from django.test import TestCase
-from boards.views import board_topics
 from ..models import Board
-from django.contrib.auth.models import User
+from ..views import TopicListView
 
 class BoardTopicsTests(TestCase):
     def setUp(self):
@@ -17,10 +16,6 @@ class BoardTopicsTests(TestCase):
         url = reverse("board_topics", kwargs={"pk": 99})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
-
-    def test_board_topics_url_resolves_board_topics_view(self):
-        view = resolve(f"/boards/{self.board.pk}/")
-        self.assertEqual(view.func, board_topics)
 
     def test_board_topics_view_contains_link_back_to_homepage(self):
         board_topics_url = reverse("board_topics", kwargs={"pk": 1})
@@ -37,3 +32,7 @@ class BoardTopicsTests(TestCase):
 
         self.assertContains(response, f'href="{homepage_url}"')
         self.assertContains(response, f'href="{new_topic_url}"')
+
+    def test_board_topics_url_resolves_board_topics_view(self):
+        view = resolve('/boards/1/')
+        self.assertEquals(view.func.view_class, TopicListView)

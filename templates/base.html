@@ -18,7 +18,10 @@
 
     <!-- Your custom CSS -->
     <link rel="stylesheet" href="{% static 'css/app.css' %}" />
-
+        <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    {% block javascript %}{% endblock %}
     {% block stylesheet %}
       <link rel="stylesheet" href="{% static 'css/accounts.css' %}">
     {% endblock %}
